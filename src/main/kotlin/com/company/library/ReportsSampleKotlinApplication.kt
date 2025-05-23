@@ -55,7 +55,7 @@ open class ReportsSampleKotlinApplication : AppShellConfigurator {
     }
 
     @Bean
-    fun reportHistoryCleanJob(): JobDetail {
+    open fun reportHistoryCleanJob(): JobDetail {
         return JobBuilder.newJob()
             .ofType(ReportHistoryCleanJob::class.java)
             .storeDurably()
@@ -64,7 +64,7 @@ open class ReportsSampleKotlinApplication : AppShellConfigurator {
     }
 
     @Bean
-    fun reportHistoryCleanTrigger(): Trigger {
+    open fun reportHistoryCleanTrigger(): Trigger {
         return TriggerBuilder.newTrigger()
             .forJob(reportHistoryCleanJob())
             .startNow()
