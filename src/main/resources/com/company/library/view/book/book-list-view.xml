@@ -58,7 +58,6 @@
                         text="msg://generateReport.text"/>
             </actions>
             <columns resizable="true">
-                <column property="report"/>
                 <column property="name"/>
                 <column property="summary"/>
                 <column property="literatureType"/>

@@ -48,6 +48,7 @@ dependencies {
     implementation 'io.jmix.reports:jmix-reports-flowui-starter'
     implementation 'io.jmix.quartz:jmix-quartz-starter'
     implementation 'io.jmix.quartz:jmix-quartz-flowui-starter'
+    implementation 'io.jmix.rest:jmix-rest-starter'
 }
 
 configurations.implementation {
