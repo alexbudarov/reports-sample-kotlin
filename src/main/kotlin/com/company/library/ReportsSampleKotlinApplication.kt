@@ -1,16 +1,18 @@
 package com.company.library
 
+import com.company.library.app.ReportHistoryCleanJob
 import com.vaadin.flow.component.page.AppShellConfigurator
 import com.vaadin.flow.component.page.Push
 import com.vaadin.flow.server.PWA
 import com.vaadin.flow.theme.Theme
+import org.quartz.*
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.context.event.EventListener
@@ -50,5 +52,23 @@ open class ReportsSampleKotlinApplication : AppShellConfigurator {
                 "Application started at http://localhost:"
                         + (environment?.getProperty("local.server.port") ?: "")
                         + (environment?.getProperty("server.servlet.context-path") ?: ""))
+    }
+
+    @Bean
+    fun reportHistoryCleanJob(): JobDetail {
+        return JobBuilder.newJob()
+            .ofType(ReportHistoryCleanJob::class.java)
+            .storeDurably()
+            .withIdentity("reportHistoryClean")
+            .build()
+    }
+
+    @Bean
+    fun reportHistoryCleanTrigger(): Trigger {
+        return TriggerBuilder.newTrigger()
+            .forJob(reportHistoryCleanJob())
+            .startNow()
+            .withSchedule(CronScheduleBuilder.cronSchedule("0 0 1 * * ?")) // <1>
+            .build()
     }
 }
