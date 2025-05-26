@@ -260,6 +260,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
             importReport("Authors info.zip")
             importReport("Book Items location.zip")
             importReport("Book Record.zip")
+            importReport("Neighbourhoods.zip")
             importReport("Publication details.zip")
             importReport("Publications grouped by types and books.zip")
             importReport("Recently added book items.zip")
