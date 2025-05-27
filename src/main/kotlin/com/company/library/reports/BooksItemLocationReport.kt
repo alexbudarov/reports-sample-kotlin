@@ -54,7 +54,7 @@ import io.jmix.reports.entity.ReportOutputType
 class BooksItemLocationReport(private val messages: Messages, private val dataManager: DataManager,
                               private val fetchPlans: FetchPlans) {
 
-    @RelatesTo(inputParameter = "entities")
+    @InputParameterDelegate(alias = "entities")
     fun validateEntities(): ParameterValidator<List<BookInstance>> {
         return ParameterValidator { value: List<BookInstance>, errorConsumer: ErrorConsumer ->
             if (value.size > 1000) {
@@ -63,14 +63,14 @@ class BooksItemLocationReport(private val messages: Messages, private val dataMa
         }
     }
 
-    @RelatesTo(inputParameter = "entities")
+    @InputParameterDelegate(alias = "entities")
     fun transformEntities(): ParameterTransformer<List<BookInstance>> {
         return ParameterTransformer { value: List<BookInstance>, params: Map<String?, Any?>? ->
             value.sortedBy { bi -> bi.inventoryNumber }
         }
     }
 
-    @RelatesTo(inputParameter = "entities")
+    @InputParameterDelegate(alias = "entities")
     fun defaultValueEntities(): DefaultValueProvider<List<BookInstance>> {
         return DefaultValueProvider {
             listOf(
@@ -84,7 +84,7 @@ class BooksItemLocationReport(private val messages: Messages, private val dataMa
         }
     }
 
-    @RelatesTo(dataSet = "BookInstances")
+    @DataSetDelegate(name = "BookInstances")
     fun bookInstancesFetchPlan(): FetchPlanProvider {
         return FetchPlanProvider {
             fetchPlans.builder(BookInstance::class.java)

@@ -50,7 +50,7 @@ import java.io.IOException
 )
 
 class PublicationsByYearReport {
-    @RelatesTo(template = "XML")
+    @TemplateDelegate(code = "XML")
     fun customTemplate(): CustomReport {
         return CustomReport { _: Report, rootBand: BandData, _: Map<String, Any?> -> renderXml(rootBand) }
     }

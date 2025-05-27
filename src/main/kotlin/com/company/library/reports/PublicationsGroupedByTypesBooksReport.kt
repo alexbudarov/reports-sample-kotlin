@@ -86,7 +86,7 @@ class PublicationsGroupedByTypesBooksReport(
     private val timeSource: TimeSource
 ) {
 
-    @RelatesTo(dataSet = "header")
+    @DataSetDelegate(name = "header")
     fun headerImplementation(): DataSetDataLoader {
         return DataSetDataLoader { _: Map<String, Any?>, _: BandData? ->
             val user = currentAuthentication.user.username
@@ -100,7 +100,7 @@ class PublicationsGroupedByTypesBooksReport(
         }
     }
 
-    @RelatesTo(valueFormat = "header.generated_by")
+    @ValueFormatDelegate(band = "header", field = "generated_by")
     fun headerGeneratedByValueFormat(): ValueFormatter<String> {
         return ValueFormatter { value: String? -> value?.uppercase(Locale.getDefault()) }
     }

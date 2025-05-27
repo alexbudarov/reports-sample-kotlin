@@ -58,7 +58,7 @@ import io.jmix.reports.entity.ReportOutputType
 class PublicationDetailsReport(
     private val fetchPlans: FetchPlans
 ) {
-    @RelatesTo(dataSet = "BookPublication")
+    @DataSetDelegate(name = "BookPublication")
     fun bookPublicationFetchPlan(): FetchPlanProvider {
         return FetchPlanProvider {
             fetchPlans.builder(BookPublication::class.java)

@@ -56,7 +56,7 @@ class BookRecordReport(
     private val dataManager: DataManager,
     private val resourceLoader: ResourceLoader
 ) {
-    @RelatesTo(dataSet = "title")
+    @DataSetDelegate(name = "title")
     fun titleDataLoader(): DataSetDataLoader {
         return DataSetDataLoader { parameters: Map<String, Any?>, parentBand: BandData? ->
             val book = parameters["entity"] as Book
@@ -66,7 +66,7 @@ class BookRecordReport(
         }
     }
 
-    @RelatesTo(dataSet = "Book1")
+    @DataSetDelegate(name = "Book1")
     fun book1FetchPlan(): FetchPlanProvider {
         return FetchPlanProvider {
             fetchPlans.builder(Book::class.java)
@@ -79,7 +79,7 @@ class BookRecordReport(
         }
     }
 
-    @RelatesTo(dataSet = "Authors2")
+    @DataSetDelegate(name = "Authors2")
     fun authors2FetchPlan(): FetchPlanProvider {
         // !!! we specify fetch plan for Book, not for nested authors
         return FetchPlanProvider {
@@ -93,7 +93,7 @@ class BookRecordReport(
     }
 
     // example of custom factory method for report template
-    @RelatesTo(template = "DEFAULT")
+    @TemplateDelegate(code = "DEFAULT")
     fun defaultTemplate(): Factory<ReportTemplate> {
         return Factory {
             val t = dataManager.create(ReportTemplate::class.java)

@@ -61,7 +61,7 @@ import java.util.*
 
 class RecentlyAddedBookItemsReport {
 
-    @RelatesTo(inputParameter = "createDt")
+    @InputParameterDelegate(alias = "createDt")
     fun createDtTransform(): ParameterTransformer<Date> {
         return ParameterTransformer { value: Date, _: Map<String, Any?> ->
             value.toInstant().atOffset(ZoneOffset.UTC)
@@ -69,7 +69,7 @@ class RecentlyAddedBookItemsReport {
     }
 
     // cross validation example.
-    // Do we need any annotation at all here? maybe @RelatesTo(report = true) ?
+    @ReportDelegate
     @Throws(ParseException::class)
     fun crossValidator(): ParametersCrossValidator {
         val border = SimpleDateFormat("dd.MM.yyyy").parse("01.01.1990")
