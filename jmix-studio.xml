@@ -11,6 +11,16 @@
                   <DataStoreSettingsV2 />
                 </value>
               </entry>
+              <entry key="pictures">
+                <value>
+                  <DataStoreSettingsV2>
+                    <option name="generateDdlType" value="CREATE_AND_UPDATE" />
+                    <option name="supportedTypes">
+                      <option value="hsql" />
+                    </option>
+                  </DataStoreSettingsV2>
+                </value>
+              </entry>
             </map>
           </option>
         </ModuleSettings>

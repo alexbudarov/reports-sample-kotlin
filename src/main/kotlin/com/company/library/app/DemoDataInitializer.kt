@@ -35,6 +35,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         val books: List<Book> = initBooks(types)
         val publications: List<BookPublication> = initBookPublications(books, publishers, cities)
         val bookInstances: List<BookInstance> = initBookInstances(publications, departments)
+        initBookPictures()
         importReport()
     }
 
@@ -257,6 +258,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
             }
 
         if (java.lang.Boolean.TRUE != initFlags.reportsInitialized) {
+            importReport("All Books.zip")
             importReport("Authors info.zip")
             importReport("Book Items location.zip")
             importReport("Book Record.zip")
@@ -269,6 +271,22 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
             initFlags.reportsInitialized = true
             dataManager.save(initFlags)
         }
+    }
+
+    private fun initBookPictures() {
+        val bookPicture1 = dataManager.create(BookPicture::class.java)
+        bookPicture1.bookName = "The Lost Science of Compound Interest"
+        bookPicture1.picturePath = "com/company/library/images/lost-science.jpg"
+
+        val bookPicture2 = dataManager.create(BookPicture::class.java)
+        bookPicture2.bookName = "The 20th Century Art Book"
+        bookPicture2.picturePath = "com/company/library/images/20century.jpg"
+
+        val bookPicture3 = dataManager.create(BookPicture::class.java)
+        bookPicture3.bookName = "Stewardship Choosing Service Over Self-Interest"
+        bookPicture3.picturePath = "com/company/library/images/stewardship.jpg"
+
+        dataManager.save(bookPicture1, bookPicture2, bookPicture3)
     }
 
     private fun importReport(reportFileName: String) {
