@@ -1,13 +1,13 @@
 package com.company.library.reports
 
 import com.company.library.entity.BookPublication
-import com.company.library.reports.annotation.*
-import com.company.library.reports.api.FetchPlanProvider
 import com.company.library.security.FullAccessRole
 import com.company.library.security.UserManagementRole
 import com.company.library.view.bookpublication.BookPublicationListView
 import io.jmix.core.FetchPlan
 import io.jmix.core.FetchPlans
+import io.jmix.reports.annotation.*
+import io.jmix.reports.delegate.FetchPlanProvider
 import io.jmix.reports.entity.DataSetType
 import io.jmix.reports.entity.Orientation
 import io.jmix.reports.entity.ParameterType

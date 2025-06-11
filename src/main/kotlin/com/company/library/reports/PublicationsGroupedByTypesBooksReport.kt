@@ -1,14 +1,15 @@
 package com.company.library.reports
 
-import com.company.library.reports.annotation.*
-import com.company.library.reports.api.DataSetDataLoader
-import com.company.library.reports.api.ValueFormatter
 import io.jmix.core.TimeSource
 import io.jmix.core.security.CurrentAuthentication
+import io.jmix.reports.annotation.*
 import io.jmix.reports.entity.DataSetType
 import io.jmix.reports.entity.Orientation
 import io.jmix.reports.entity.ReportOutputType
+import io.jmix.reports.yarg.loaders.ReportDataLoader
 import io.jmix.reports.yarg.structure.BandData
+import io.jmix.reports.yarg.structure.CustomValueFormatter
+import io.jmix.reports.yarg.structure.ReportQuery
 import java.util.*
 
 @ReportDef(
@@ -25,7 +26,7 @@ import java.util.*
     name = "header",
     parent = "Root",
     orientation = Orientation.HORIZONTAL,
-    dataSets = [DataSetDef(name = "header", type = DataSetType.GROOVY)]
+    dataSets = [DataSetDef(name = "header", type = DataSetType.DELEGATE)]
 )
 @BandDef(
     name = "tableheader",
@@ -87,8 +88,8 @@ class PublicationsGroupedByTypesBooksReport(
 ) {
 
     @DataSetDelegate(name = "header")
-    fun headerImplementation(): DataSetDataLoader {
-        return DataSetDataLoader { _: Map<String, Any?>, _: BandData? ->
+    fun headerImplementation(): ReportDataLoader {
+        return ReportDataLoader { _: ReportQuery, _: BandData?, _: Map<String, Any?> ->
             val user = currentAuthentication.user.username
             val currentDate = timeSource.currentTimestamp()
             listOf(
@@ -101,7 +102,7 @@ class PublicationsGroupedByTypesBooksReport(
     }
 
     @ValueFormatDelegate(band = "header", field = "generated_by")
-    fun headerGeneratedByValueFormat(): ValueFormatter<String> {
-        return ValueFormatter { value: String? -> value?.uppercase(Locale.getDefault()) }
+    fun headerGeneratedByValueFormat(): CustomValueFormatter<String> {
+        return CustomValueFormatter { value: String? -> value?.uppercase(Locale.getDefault()) }
     }
 }

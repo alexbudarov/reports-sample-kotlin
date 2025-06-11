@@ -1,10 +1,6 @@
 package com.company.library.reports
 
-import com.company.library.reports.annotation.BandDef
-import com.company.library.reports.annotation.DataSetDef
-import com.company.library.reports.annotation.ReportDef
-import com.company.library.reports.annotation.TemplateDef
-import com.company.library.reports.api.HtmlTemplateType
+import io.jmix.reports.annotation.*
 import io.jmix.reports.entity.DataSetType
 import io.jmix.reports.entity.Orientation
 import io.jmix.reports.entity.ReportOutputType
@@ -14,7 +10,7 @@ import io.jmix.reports.entity.ReportOutputType
     code = "ALL_BOOKS",
     group = DemoReportGroup::class,
     description = "Example of using multi data sets, link field, separate data store, HTML template",
-    uuid = "01970d3e-5c8e-741c-bf98-0b242cfde70d"
+    uuid = "01970d3e-5c8e-741c-bf98-0b242cfde716"
 )
 @BandDef(name = "Root", root = true, orientation = Orientation.HORIZONTAL)
 @BandDef(
@@ -50,8 +46,6 @@ import io.jmix.reports.entity.ReportOutputType
     isDefault = true,
     filePath = "com/company/library/reports/new/Template-AllBooks.html",
     outputNamePattern = "All Books.pdf",
-    htmlTemplateType = HtmlTemplateType.FREEMARKER
+    templateEngine = TemplateMarkupEngine.FREEMARKER
 )
-class AllBooksReport {
-
-}
+class AllBooksReport

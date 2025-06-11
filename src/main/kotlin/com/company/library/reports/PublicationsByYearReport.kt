@@ -1,6 +1,6 @@
 package com.company.library.reports
 
-import com.company.library.reports.annotation.*
+import io.jmix.reports.annotation.*
 import io.jmix.reports.entity.*
 import io.jmix.reports.yarg.formatters.CustomReport
 import io.jmix.reports.yarg.structure.BandData
@@ -18,13 +18,12 @@ import java.io.IOException
     code = "BY_YEAR_STATS",
     group = DemoReportGroup::class,
     description = "Example with custom template",
-    uuid = "01970c9e-6236-79c1-8297-bd04a2d9a542"
+    uuid = "01970c9e-6236-79c1-8297-bd04a2d9a517"
 )
 @InputParameterDef(
     alias = "startYear",
     name = "Start Year",
     type = ParameterType.NUMERIC,
-    parameterClassName = Int::class,
     required = true,
     defaultValue = "2000"
 )
@@ -46,7 +45,7 @@ import java.io.IOException
     outputType = ReportOutputType.CUSTOM,
     isDefault = true,
     outputNamePattern = "Stats from \${Root.startYear}.xml",
-    custom = CustomTemplateParameters(enabled = true, definedBy = CustomTemplateDefinedBy.SCRIPT)
+    custom = CustomTemplateParameters(enabled = true, definedBy = CustomTemplateDefinedBy.DELEGATE)
 )
 
 class PublicationsByYearReport {

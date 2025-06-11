@@ -1,25 +1,26 @@
 package com.company.library.reports
 
 import com.company.library.entity.Book
-import com.company.library.reports.annotation.*
-import com.company.library.reports.api.DataSetDataLoader
 import com.company.library.reports.api.Factory
-import com.company.library.reports.api.FetchPlanProvider
 import io.jmix.core.DataManager
 import io.jmix.core.FetchPlanBuilder
 import io.jmix.core.FetchPlans
+import io.jmix.reports.annotation.*
+import io.jmix.reports.delegate.FetchPlanProvider
 import io.jmix.reports.entity.*
+import io.jmix.reports.yarg.loaders.ReportDataLoader
 import io.jmix.reports.yarg.structure.BandData
+import io.jmix.reports.yarg.structure.ReportQuery
 import org.springframework.core.io.ResourceLoader
 
 @ReportDef(
-    name = "msg://com.company.library.reports/BookRecordReport.name",
+    name = "msg://BookRecordReport.name",
     code = "book-report",
     group = DemoReportGroup::class
 )
 @InputParameterDef(
     alias = "entity",
-    name = "msg://com.company.library.reports/BookRecordReport.param.entity",
+    name = "msg://BookRecordReport.param.entity",
     type = ParameterType.ENTITY,
     required = true,
     entity = EntityParameterDef(entityClass = Book::class)
@@ -28,7 +29,7 @@ import org.springframework.core.io.ResourceLoader
     name = "Root",
     root = true,
     orientation = Orientation.HORIZONTAL,
-    dataSets = [DataSetDef(name = "title", type = DataSetType.GROOVY)]
+    dataSets = [DataSetDef(name = "title", type = DataSetType.DELEGATE)]
 )
 @BandDef(
     name = "Book1",
@@ -50,15 +51,22 @@ import org.springframework.core.io.ResourceLoader
         entity = EntityDataSetDef(parameterAlias = "entity", nestedCollectionAttribute = "authors")
     )]
 )
-@TemplateDef(code = "DEFAULT", outputType = ReportOutputType.PDF, isDefault = true)
+@TemplateDef(
+    code = "DEFAULT",
+    outputType = ReportOutputType.PDF,
+    isDefault = true,
+    // todo remove when Factory will be supported
+    filePath = "com/company/library/reports/new/Template-for-BookRecord.docx",
+    outputNamePattern = "\${Root.title}.pdf"
+)
 class BookRecordReport(
     private val fetchPlans: FetchPlans,
     private val dataManager: DataManager,
     private val resourceLoader: ResourceLoader
 ) {
     @DataSetDelegate(name = "title")
-    fun titleDataLoader(): DataSetDataLoader {
-        return DataSetDataLoader { parameters: Map<String, Any?>, parentBand: BandData? ->
+    fun titleDataLoader(): ReportDataLoader {
+        return ReportDataLoader { _: ReportQuery, _: BandData?, parameters: Map<String, Any?> ->
             val book = parameters["entity"] as Book
             listOf(
                 mapOf("title" to "Book Record - ${book.name}")
@@ -93,7 +101,8 @@ class BookRecordReport(
     }
 
     // example of custom factory method for report template
-    @TemplateDelegate(code = "DEFAULT")
+    // todo uncomment when factory is supported
+    //  @TemplateDelegate(code = "DEFAULT")
     fun defaultTemplate(): Factory<ReportTemplate> {
         return Factory {
             val t = dataManager.create(ReportTemplate::class.java)

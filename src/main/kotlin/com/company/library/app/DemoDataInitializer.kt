@@ -218,7 +218,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
 
         var bookInstance = dataManager.create(BookInstance::class.java)
         bookInstance.isReference = true
-        bookInstance.inventoryNumber = java.lang.Long.getLong("12584572132")
+        bookInstance.inventoryNumber = "12584572132".toLong()
         bookInstance.bookCount = 20
         bookInstance.bookPublication = bookPublications[3]
         bookInstance.libraryDepartment = departments[1]
@@ -227,7 +227,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
 
         bookInstance = dataManager.create(BookInstance::class.java)
         bookInstance.isReference = false
-        bookInstance.inventoryNumber = java.lang.Long.getLong("234526243562")
+        bookInstance.inventoryNumber = "234526243562".toLong()
         bookInstance.bookCount = 100
         bookInstance.bookPublication = bookPublications[2]
         bookInstance.libraryDepartment = departments[0]
@@ -236,7 +236,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
 
         bookInstance = dataManager.create(BookInstance::class.java)
         bookInstance.isReference = false
-        bookInstance.inventoryNumber = java.lang.Long.getLong("32541435134")
+        bookInstance.inventoryNumber = "32541435134".toLong()
         bookInstance.bookCount = 85
         bookInstance.bookPublication = bookPublications[1]
         bookInstance.libraryDepartment = departments[0]

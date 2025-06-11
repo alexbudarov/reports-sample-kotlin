@@ -1,13 +1,13 @@
 package com.company.library.reports
 
-import com.company.library.reports.annotation.*
-import com.company.library.reports.api.ErrorConsumer
-import com.company.library.reports.api.ParameterTransformer
-import com.company.library.reports.api.ParametersCrossValidator
+import io.jmix.reports.annotation.*
+import io.jmix.reports.delegate.ParameterTransformer
+import io.jmix.reports.delegate.ParametersCrossValidator
 import io.jmix.reports.entity.DataSetType
 import io.jmix.reports.entity.Orientation
 import io.jmix.reports.entity.ParameterType
 import io.jmix.reports.entity.ReportOutputType
+import io.jmix.reports.exception.ReportParametersValidationException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.ZoneOffset
@@ -22,7 +22,6 @@ import java.util.*
     alias = "createDt",
     name = "Create After",
     type = ParameterType.DATETIME,
-    parameterClassName = Date::class,
     required = true
 )
 @BandDef(
@@ -73,10 +72,10 @@ class RecentlyAddedBookItemsReport {
     @Throws(ParseException::class)
     fun crossValidator(): ParametersCrossValidator {
         val border = SimpleDateFormat("dd.MM.yyyy").parse("01.01.1990")
-        return ParametersCrossValidator { parameterValues: Map<String, Any?>, errorConsumer: ErrorConsumer ->
+        return ParametersCrossValidator { parameterValues: Map<String, Any?> ->
             val createDt = parameterValues["createDt"] as Date
             if (createDt.before(border)) {
-                errorConsumer.addError("Date is too early")
+                throw ReportParametersValidationException("Date is too early")
             }
         }
     }

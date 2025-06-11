@@ -1,6 +1,6 @@
 package com.company.library.reports
 
-import com.company.library.reports.annotation.*
+import io.jmix.reports.annotation.*
 import io.jmix.reports.entity.DataSetType
 import io.jmix.reports.entity.Orientation
 import io.jmix.reports.entity.ReportOutputType
@@ -8,7 +8,6 @@ import io.jmix.reports.entity.ReportOutputType
 @ReportDef(
     name = "Authors Info",
     code = "authors-info",
-    group = DemoReportGroup::class,
     description = "Example report with Table template"
 )
 @BandDef(
@@ -44,11 +43,14 @@ import io.jmix.reports.entity.ReportOutputType
                 caption = "msg://com.company.library.entity/Author.createdDate"
             ), TableColumnDef(
                 key = "createdBy",
-                caption = "com.company.library.entity/Author.createdBy"
+                caption = "msg://com.company.library.entity/Author.createdBy"
             ), TableColumnDef(
                 key = "firstName",
-                caption = "com.company.library.entity/Author.firstName"
-            ), TableColumnDef(key = "lastName", caption = "com.company.library.entity/Author.lastName")]
+                caption = "msg://com.company.library.entity/Author.firstName"
+            ), TableColumnDef(
+                key = "lastName",
+                caption = "msg://com.company.library.entity/Author.lastName"
+            )]
         )]
     )
 )
@@ -57,6 +59,4 @@ import io.jmix.reports.entity.ReportOutputType
     field = "createdDate",
     format = "dd.MM.yyyy HH:mm:ss"
 )
-class AuthorsInfoReport {
-
-}
+class AuthorsInfoReport
