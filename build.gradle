@@ -50,6 +50,7 @@ dependencies {
     implementation 'io.jmix.quartz:jmix-quartz-flowui-starter'
     implementation 'io.jmix.rest:jmix-rest-starter'
     implementation 'org.hsqldb:hsqldb'
+    implementation 'io.jmix.gridexport:jmix-gridexport-flowui-starter'
 }
 
 configurations.implementation {
