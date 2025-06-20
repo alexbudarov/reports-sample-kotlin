@@ -40,6 +40,7 @@
             <button id="editButton" action="bookInstancesDataGrid.editAction"/>
             <button id="removeButton" action="bookInstancesDataGrid.removeAction"/>
             <button id="runReportsBtn" action="bookInstancesDataGrid.runReports"/>
+            <button id="showHistoryBtn" action="bookInstancesDataGrid.showHistory"/>
             <simplePagination id="pagination" dataLoader="bookInstancesDl"/>
         </hbox>
         <dataGrid id="bookInstancesDataGrid"
@@ -52,6 +53,7 @@
                 <action id="editAction" type="list_edit"/>
                 <action id="removeAction" type="list_remove"/>
                 <action id="runReports" type="report_runListEntityReport"/>
+                <action id="showHistory" type="report_showExecutionReportHistory"/>
             </actions>
             <columns resizable="true">
                 <column property="isReference"/>

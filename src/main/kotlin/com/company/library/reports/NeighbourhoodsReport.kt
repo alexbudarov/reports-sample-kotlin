@@ -8,7 +8,7 @@ import io.jmix.reports.entity.ReportOutputType
 
 @ReportDef(
     name = "Neighbourhoods",
-    code = "NEIGHB",
+    code = "NEIGHB_ANN",
     group = DemoReportGroup::class,
     description = "JSON data set example"
 )

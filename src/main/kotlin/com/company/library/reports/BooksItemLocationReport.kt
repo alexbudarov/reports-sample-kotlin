@@ -55,6 +55,7 @@ import io.jmix.reports.yarg.structure.DefaultValueProvider
     isDefault = true,
     outputNamePattern = "Book Items location.xlsx"
 )
+@AvailableInViews(viewIds = ["BookInstance.list"])
 class BooksItemLocationReport(private val messages: Messages, private val dataManager: DataManager,
                               private val fetchPlans: FetchPlans) {
 

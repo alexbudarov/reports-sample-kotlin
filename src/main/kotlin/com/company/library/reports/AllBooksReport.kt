@@ -7,7 +7,7 @@ import io.jmix.reports.entity.ReportOutputType
 
 @ReportDef(
     name = "All Books",
-    code = "ALL_BOOKS",
+    code = "ALL_BOOKS_ANN",
     group = DemoReportGroup::class,
     description = "Example of using multi data sets, link field, separate data store, HTML template",
     uuid = "01970d3e-5c8e-741c-bf98-0b242cfde716"

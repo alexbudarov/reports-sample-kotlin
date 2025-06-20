@@ -40,6 +40,7 @@
             <button id="printBtn" action="booksDataGrid.reportPrint"/>
             <button id="runBtn" action="booksDataGrid.run"/>
             <button id="generateBtn" action="booksDataGrid.generateReport"/>
+            <button id="showHistoryBtn" action="booksDataGrid.showHistory"/>
             <simplePagination id="pagination" dataLoader="booksDl"/>
         </hbox>
         <dataGrid id="booksDataGrid"
@@ -56,6 +57,7 @@
                 <action id="run" type="report_runReport"/>
                 <action id="generateReport" type="list_itemTracking" icon="vaadin:file"
                         text="msg://generateReport.text"/>
+                <action id="showHistory" type="report_showExecutionReportHistory"/>
             </actions>
             <columns resizable="true">
                 <column property="name"/>

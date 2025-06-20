@@ -15,7 +15,7 @@ import io.jmix.reports.entity.ReportOutputType
 
 @ReportDef(
     name = "Publication details",
-    code = "PUBL",
+    code = "PUBL-ANN",
     group = DemoReportGroup::class
 )
 @InputParameterDef(

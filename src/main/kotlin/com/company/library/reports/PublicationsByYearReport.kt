@@ -15,7 +15,7 @@ import java.io.IOException
 
 @ReportDef(
     name = "Publications by year",
-    code = "BY_YEAR_STATS",
+    code = "BY_YEAR_STATS_ANN",
     group = DemoReportGroup::class,
     description = "Example with custom template",
     uuid = "01970c9e-6236-79c1-8297-bd04a2d9a517"

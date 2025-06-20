@@ -1,7 +1,7 @@
 package com.company.library.reports
 
 import com.company.library.entity.Book
-import com.company.library.reports.api.Factory
+import com.company.library.reports.api.Customizer
 import io.jmix.core.DataManager
 import io.jmix.core.FetchPlanBuilder
 import io.jmix.core.FetchPlans
@@ -15,8 +15,9 @@ import org.springframework.core.io.ResourceLoader
 
 @ReportDef(
     name = "msg://BookRecordReport.name",
-    code = "book-report",
-    group = DemoReportGroup::class
+    code = "book-report-anno",
+    group = DemoReportGroup::class,
+    system = true
 )
 @InputParameterDef(
     alias = "entity",
@@ -55,7 +56,6 @@ import org.springframework.core.io.ResourceLoader
     code = "DEFAULT",
     outputType = ReportOutputType.PDF,
     isDefault = true,
-    // todo remove when Factory will be supported
     filePath = "com/company/library/reports/new/Template-for-BookRecord.docx",
     outputNamePattern = "\${Root.title}.pdf"
 )
@@ -100,27 +100,19 @@ class BookRecordReport(
         }
     }
 
-    // example of custom factory method for report template
-    // todo uncomment when factory is supported
+    // example of customizer method for report template
     //  @TemplateDelegate(code = "DEFAULT")
-    fun defaultTemplate(): Factory<ReportTemplate> {
-        return Factory {
-            val t = dataManager.create(ReportTemplate::class.java)
-            val customTemplateFromDb = loadTemplateFileFromDatabase()
-            if (customTemplateFromDb.isEmpty()) {
-                val file = resourceLoader.getResource("com/company/library/reports/new/Template-for-BookRecord.docx")
-                t.content = file.contentAsByteArray
-            } else {
-                t.content = customTemplateFromDb
+    fun defaultTemplate(): Customizer<ReportTemplate> {
+        return Customizer { template: ReportTemplate ->
+            val customTemplateFromDb = loadTemplateFileFromSomeStorage()
+            if (customTemplateFromDb.isNotEmpty()) {
+                template.content = customTemplateFromDb
             }
-
-            t.outputNamePattern = "\${Root.title}.pdf"
-            t
         }
     }
 
-    private fun loadTemplateFileFromDatabase(): ByteArray {
-        // todo load from database
+    private fun loadTemplateFileFromSomeStorage(): ByteArray {
+        // todo load from some storage, e.g. S3 bucket
         return ByteArray(0)
     }
 }

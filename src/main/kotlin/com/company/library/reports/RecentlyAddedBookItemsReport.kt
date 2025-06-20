@@ -73,8 +73,8 @@ class RecentlyAddedBookItemsReport {
     fun crossValidator(): ParametersCrossValidator {
         val border = SimpleDateFormat("dd.MM.yyyy").parse("01.01.1990")
         return ParametersCrossValidator { parameterValues: Map<String, Any?> ->
-            val createDt = parameterValues["createDt"] as Date
-            if (createDt.before(border)) {
+            val createDt = parameterValues["createDt"] as Date?
+            if (createDt != null && createDt.before(border)) {
                 throw ReportParametersValidationException("Date is too early")
             }
         }

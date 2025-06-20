@@ -37,6 +37,7 @@
             <button id="createButton" action="bookPublicationsDataGrid.createAction"/>
             <button id="editButton" action="bookPublicationsDataGrid.editAction"/>
             <button id="removeButton" action="bookPublicationsDataGrid.removeAction"/>
+            <button id="showHistoryBtn" action="bookPublicationsDataGrid.showHistory"/>
             <simplePagination id="pagination" dataLoader="bookPublicationsDl"/>
         </hbox>
         <dataGrid id="bookPublicationsDataGrid"
@@ -48,6 +49,7 @@
                 <action id="createAction" type="list_create"/>
                 <action id="editAction" type="list_edit"/>
                 <action id="removeAction" type="list_remove"/>
+                <action id="showHistory" type="report_showExecutionReportHistory"/>
             </actions>
             <columns resizable="true">
                 <column property="year"/>

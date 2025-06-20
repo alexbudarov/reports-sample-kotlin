@@ -1,6 +1,7 @@
 package com.company.library.app
 
 import com.company.library.entity.*
+import com.google.common.collect.Lists
 import io.jmix.core.DataManager
 import io.jmix.core.Resources
 import io.jmix.core.security.Authenticated
@@ -32,7 +33,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         val types: List<LiteratureType> = initLiteratureTypes()
         val departments: List<LibraryDepartment> = initLibraryDepartments()
         val authors: List<Author> = initAuthors()
-        val books: List<Book> = initBooks(types)
+        val books: List<Book> = initBooks(types, authors)
         val publications: List<BookPublication> = initBookPublications(books, publishers, cities)
         val bookInstances: List<BookInstance> = initBookInstances(publications, departments)
         initBookPictures()
@@ -54,6 +55,10 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         city.name = "Los Angeles"
         list.add(dataManager.save(city))
 
+        city = dataManager.create(City::class.java)
+        city.name = "Boston"
+        list.add(dataManager.save(city))
+
         return list
     }
 
@@ -66,6 +71,10 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
 
         publisher = dataManager.create(Publisher::class.java)
         publisher.name = "Phaidon Press"
+        list.add(dataManager.save(publisher))
+
+        publisher = dataManager.create(Publisher::class.java)
+        publisher.name = "Addison-Wesley Professional"
         list.add(dataManager.save(publisher))
 
         return list
@@ -84,6 +93,10 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
 
         literatureType = dataManager.create(LiteratureType::class.java)
         literatureType.name = "Management Skills"
+        list.add(dataManager.save(literatureType))
+
+        literatureType = dataManager.create(LiteratureType::class.java)
+        literatureType.name = "Computers and Technology"
         list.add(dataManager.save(literatureType))
 
         return list
@@ -134,10 +147,30 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         author.lastName = "Runde"
         list.add(dataManager.save(author))
 
+        author = dataManager.create(Author::class.java)
+        author.firstName = "Robert"
+        author.lastName = "Martin"
+        list.add(dataManager.save(author))
+
+        author = dataManager.create(Author::class.java)
+        author.firstName = "Brian"
+        author.lastName = "Goetz"
+        list.add(dataManager.save(author))
+
+        author = dataManager.create(Author::class.java)
+        author.firstName = "Tim"
+        author.lastName = "Peierls"
+        list.add(dataManager.save(author))
+
+        author = dataManager.create(Author::class.java)
+        author.firstName = "Joshua"
+        author.lastName = "Bloch"
+        list.add(dataManager.save(author))
+
         return list
     }
 
-    private fun initBooks(types: List<LiteratureType>): List<Book> {
+    private fun initBooks(types: List<LiteratureType>, authors: List<Author>): List<Book> {
         val list = java.util.ArrayList<Book>()
 
         var book = dataManager.create(Book::class.java)
@@ -147,6 +180,7 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
             "In a new and compelling story about money, science, art, evolution, discovery, creation, struggle, " +
                     "and ultimately, triumph, Curtis will take you on a life-changing journey through some of the most complicated " +
                     "mathematic money concepts by transforming them into an easily implemented path to unlimited wealth and prosperity"
+        book.authors = Lists.newArrayList(authors[1])
         list.add(dataManager.save(book))
 
         book = dataManager.create(Book::class.java)
@@ -163,6 +197,25 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         book.summary =
             "Stewardship was provocative, even revolutionary, when it was first published in 1993, and it remains " +
                     "every bit as relevant and radical today"
+        book.authors = Lists.newArrayList(authors[0])
+        list.add(dataManager.save(book))
+
+        book = dataManager.create(Book::class.java)
+        book.name = "Clean Code: A Handbook of Agile Software"
+        book.literatureType = types[3]
+        book.summary =
+            "Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees." +
+                    " Every year, countless hours and significant resources are lost because of poorly written code." +
+                    " But it doesn’t have to be that way."
+        book.authors = Lists.newArrayList(authors[3])
+        list.add(dataManager.save(book))
+
+        book = dataManager.create(Book::class.java)
+        book.name = "Java Concurrency in Practice"
+        book.literatureType = types[3]
+        book.summary = "Threads are a fundamental part of the Java platform. As multicore processors become the norm," +
+                " using concurrency effectively becomes essential for building high-performance applications."
+        book.authors = Lists.newArrayList(authors[4], authors[5], authors[6])
         list.add(dataManager.save(book))
 
         return list
@@ -204,6 +257,22 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         bookPublication.book = books[0]
         bookPublication.publisher = publishers[1]
         bookPublication.city = cities[2]
+
+        list.add(dataManager.save(bookPublication))
+
+        bookPublication = dataManager.create(BookPublication::class.java)
+        bookPublication.year = 2009
+        bookPublication.book = books[3]
+        bookPublication.publisher = publishers[2]
+        bookPublication.city = cities[3]
+
+        list.add(dataManager.save(bookPublication))
+
+        bookPublication = dataManager.create(BookPublication::class.java)
+        bookPublication.year = 2006
+        bookPublication.book = books[4]
+        bookPublication.publisher = publishers[2]
+        bookPublication.city = cities[3]
 
         list.add(dataManager.save(bookPublication))
 
@@ -286,7 +355,15 @@ open class DemoDataInitializer(private val dataManager: DataManager, private val
         bookPicture3.bookName = "Stewardship Choosing Service Over Self-Interest"
         bookPicture3.picturePath = "com/company/library/images/stewardship.jpg"
 
-        dataManager.save(bookPicture1, bookPicture2, bookPicture3)
+        val bookPicture4 = dataManager.create(BookPicture::class.java)
+        bookPicture4.bookName = "Clean Code: A Handbook of Agile Software"
+        bookPicture4.picturePath = "com/company/library/images/cleancode.jpg"
+
+        val bookPicture5 = dataManager.create(BookPicture::class.java)
+        bookPicture5.bookName = "Java Concurrency in Practice"
+        bookPicture5.picturePath = "com/company/library/images/concurrency.jpg"
+
+        dataManager.save(bookPicture1, bookPicture2, bookPicture3, bookPicture4, bookPicture5)
     }
 
     private fun importReport(reportFileName: String) {
